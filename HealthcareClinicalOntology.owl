@@ -1,0 +1,597 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rdf:RDF xmlns:hco="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical">
+  <owl:Ontology rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical">
+    <rdfs:label xml:lang="en">Healthcare Clinical Ontology</rdfs:label>
+    <rdfs:comment xml:lang="en">A domain ontology modelling the clinical patient-care pathway: patients, practitioners, diagnoses, diseases, treatments, medications, clinical institutions and supporting clinical events. Developed for the exam of Knowledge Representation, Prof. Matteo Cristani, University of Verona.</rdfs:comment>
+    <owl:versionInfo xml:lang="en">1.0.0</owl:versionInfo>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#AcuteDisease">
+    <rdfs:label xml:lang="en">AcuteDisease</rdfs:label>
+    <rdfs:comment xml:lang="en">A disease of rapid onset and (usually) short duration.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission">
+    <rdfs:label xml:lang="en">Admission</rdfs:label>
+    <rdfs:comment xml:lang="en">A hospital stay episode of a patient.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ClinicalEvent" />
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="N5bbe9e167eda40eca9b7207726df9b76">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#admissionAt" />
+        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Hospital" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#AllergicPatient">
+    <rdfs:label xml:lang="en">AllergicPatient</rdfs:label>
+    <rdfs:comment xml:lang="en">A patient with at least one documented allergy. DL: AllergicPatient ≡ Patient ⊓ ∃hasAllergy.Allergy</rdfs:comment>
+    <owl:equivalentClass>
+      <owl:Class rdf:nodeID="N3c3d95c1664e40b1aa4bfd801231f8a1">
+        <owl:intersectionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+          <owl:Restriction rdf:nodeID="Nfd4d5062b0664b3489871e5a1a4d5ad1">
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasAllergy">
+                <rdfs:label xml:lang="en">hasAllergy</rdfs:label>
+                <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+                <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Allergy" />
+              </owl:ObjectProperty>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Allergy" />
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Allergy">
+    <rdfs:label xml:lang="en">Allergy</rdfs:label>
+    <rdfs:comment xml:lang="en">A documented hypersensitivity of a patient to a substance.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Appointment">
+    <rdfs:label xml:lang="en">Appointment</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ClinicalEvent" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ChronicDisease">
+    <rdfs:label xml:lang="en">ChronicDisease</rdfs:label>
+    <rdfs:comment xml:lang="en">A disease of long duration and generally slow progression.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease" />
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#AcuteDisease" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ChronicPatient">
+    <rdfs:label xml:lang="en">ChronicPatient</rdfs:label>
+    <rdfs:comment xml:lang="en">A patient diagnosed with at least one chronic disease. DL: ChronicPatient ≡ Patient ⊓ ∃diagnosedWith.(Diagnosis ⊓ ∃diagnosisOf.ChronicDisease)</rdfs:comment>
+    <owl:equivalentClass>
+      <owl:Class rdf:nodeID="N5165b6e4b5dc47c5980369fd6d0b1eff">
+        <owl:intersectionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+          <owl:Restriction rdf:nodeID="N9358be0bdd6a4a15b1ccaa9043aa5edf">
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#diagnosedWith">
+                <rdfs:label xml:lang="en">diagnosedWith</rdfs:label>
+                <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+                <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+              </owl:ObjectProperty>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class rdf:nodeID="N51e152e46efa4e0ea013608b431f533e">
+                <owl:intersectionOf rdf:parseType="Collection">
+                  <rdf:Description rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+                  <owl:Restriction rdf:nodeID="N300e6b2cdb724722a26a1968d1ef4aee">
+                    <owl:onProperty>
+                      <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#diagnosisOf">
+                        <rdfs:label xml:lang="en">diagnosisOf</rdfs:label>
+                        <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+                        <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease" />
+                      </owl:ObjectProperty>
+                    </owl:onProperty>
+                    <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ChronicDisease" />
+                  </owl:Restriction>
+                </owl:intersectionOf>
+              </owl:Class>
+            </owl:someValuesFrom>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Clinic">
+    <rdfs:label xml:lang="en">Clinic</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Institution" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ClinicalEvent">
+    <rdfs:label xml:lang="en">ClinicalEvent</rdfs:label>
+    <rdfs:comment xml:lang="en">Abstract root for time-stamped clinical occurrences.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Department">
+    <rdfs:label xml:lang="en">Department</rdfs:label>
+    <rdfs:comment xml:lang="en">An organisational subdivision of a Hospital (e.g. Cardiology).</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis">
+    <rdfs:label xml:lang="en">Diagnosis</rdfs:label>
+    <rdfs:comment xml:lang="en">The clinical act of identifying a disease from symptoms/tests.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="Nadf2a5761f004f6781f583f5a4595f03">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#diagnosisOf" />
+        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease">
+    <rdfs:label xml:lang="en">Disease</rdfs:label>
+    <rdfs:comment xml:lang="en">A pathological condition recognised in clinical practice.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Doctor">
+    <rdfs:label xml:lang="en">Doctor</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="N1839d13382214676b89781f00078b21c">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#prescribes" />
+        <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Nurse" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Hospital">
+    <rdfs:label xml:lang="en">Hospital</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Institution" />
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Clinic" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#HospitalizedPatient">
+    <rdfs:label xml:lang="en">HospitalizedPatient</rdfs:label>
+    <rdfs:comment xml:lang="en">A patient with at least one hospital admission episode. DL: HospitalizedPatient ≡ Patient ⊓ ∃admittedTo.Admission</rdfs:comment>
+    <owl:equivalentClass>
+      <owl:Class rdf:nodeID="Nd61689caaf224cf7a568e0ee3733f165">
+        <owl:intersectionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+          <owl:Restriction rdf:nodeID="N9bef73b75dba4b5aa0acf71af3b1903b">
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#admittedTo">
+                <rdfs:label xml:lang="en">admittedTo</rdfs:label>
+                <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+                <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission" />
+              </owl:ObjectProperty>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission" />
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Institution">
+    <rdfs:label xml:lang="en">Institution</rdfs:label>
+    <rdfs:comment xml:lang="en">Abstract root for organisations delivering healthcare.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#InsurancePlan">
+    <rdfs:label xml:lang="en">InsurancePlan</rdfs:label>
+    <rdfs:comment xml:lang="en">A health-insurance policy that may cover certain treatments.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#LabTest">
+    <rdfs:label xml:lang="en">LabTest</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ClinicalEvent" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#MedicalRecord">
+    <rdfs:label xml:lang="en">MedicalRecord</rdfs:label>
+    <rdfs:comment xml:lang="en">The documented clinical history of a patient.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication">
+    <rdfs:label xml:lang="en">Medication</rdfs:label>
+    <rdfs:comment xml:lang="en">A pharmaceutical substance used to treat or prevent disease.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Nurse">
+    <rdfs:label xml:lang="en">Nurse</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient">
+    <rdfs:label xml:lang="en">Patient</rdfs:label>
+    <rdfs:comment xml:lang="en">A person receiving clinical care.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Person" />
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="Nde1d1ede204a46568f68ab92d6bb9fd5">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasMedicalRecord" />
+        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#MedicalRecord" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Person">
+    <rdfs:label xml:lang="en">Person</rdfs:label>
+    <rdfs:comment xml:lang="en">Abstract root of every human agent in the ontology.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Pharmacotherapy">
+    <rdfs:label xml:lang="en">Pharmacotherapy</rdfs:label>
+    <rdfs:comment xml:lang="en">Treatment administered through medication.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner">
+    <rdfs:label xml:lang="en">Practitioner</rdfs:label>
+    <rdfs:comment xml:lang="en">A qualified healthcare professional.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Person" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription">
+    <rdfs:label xml:lang="en">Prescription</rdfs:label>
+    <rdfs:comment xml:lang="en">A formal order issued by a doctor for one or more medications.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="Nb73e28d650cd4326b466550d5ee353f3">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#prescribedMedication" />
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+        <owl:onClass rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="N6a14eb0b1b534489aac733119e37210f">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#prescribedMedication" />
+        <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</owl:maxQualifiedCardinality>
+        <owl:onClass rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Specialist">
+    <rdfs:label xml:lang="en">Specialist</rdfs:label>
+    <rdfs:comment xml:lang="en">A doctor with an advanced specialisation in a disease area.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Doctor" />
+  </owl:Class>
+<owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Surgery">
+    <rdfs:label xml:lang="en">Surgery</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Therapy" />
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Pharmacotherapy" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#SurgicalPatient">
+    <rdfs:label xml:lang="en">SurgicalPatient</rdfs:label>
+    <rdfs:comment xml:lang="en">A patient currently or previously undergoing a surgical treatment. DL: SurgicalPatient ≡ Patient ⊓ ∃undergoesTreatment.Surgery</rdfs:comment>
+    <owl:equivalentClass>
+      <owl:Class rdf:nodeID="N988a066b0e6b45b19419cb94fba8fb61">
+        <owl:intersectionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+          <owl:Restriction rdf:nodeID="N22c33bcba4df4a3893322df50fcbe690">
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#undergoesTreatment">
+                <rdfs:label xml:lang="en">undergoesTreatment</rdfs:label>
+                <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+                <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+              </owl:ObjectProperty>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Surgery" />
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Symptom">
+    <rdfs:label xml:lang="en">Symptom</rdfs:label>
+    <rdfs:comment xml:lang="en">A subjective or objective manifestation suggesting a disease.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Therapy">
+    <rdfs:label xml:lang="en">Therapy</rdfs:label>
+    <rdfs:comment xml:lang="en">Non-surgical, non-pharmacological treatment (e.g. physiotherapy).</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Pharmacotherapy" />
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment">
+    <rdfs:label xml:lang="en">Treatment</rdfs:label>
+    <rdfs:comment xml:lang="en">A clinical intervention aimed at curing or managing a disease.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction rdf:nodeID="Nad1bfd48a63f4577adb35e92e3d091e1">
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#performedBy" />
+        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#VitalSign">
+    <rdfs:label xml:lang="en">VitalSign</rdfs:label>
+    <rdfs:comment xml:lang="en">A measured physiological parameter (blood pressure, heart rate, etc.).</rdfs:comment>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#admissionAt">
+    <rdfs:label xml:lang="en">admissionAt</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Hospital" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#allergicToMedication">
+    <rdfs:label xml:lang="en">allergicToMedication</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Allergy" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#appointmentWith">
+    <rdfs:label xml:lang="en">appointmentWith</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Appointment" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#conductsLabTest">
+    <rdfs:label xml:lang="en">conductsLabTest</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#LabTest" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#coversTreatment">
+    <rdfs:label xml:lang="en">coversTreatment</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#InsurancePlan" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasAppointment">
+    <rdfs:label xml:lang="en">hasAppointment</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Appointment" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasInsurance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">hasInsurance</rdfs:label>
+    <rdfs:comment xml:lang="en">A patient has at most one active insurance plan (functional).</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#InsurancePlan" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasMedicalRecord">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">hasMedicalRecord</rdfs:label>
+    <rdfs:comment xml:lang="en">Every patient has exactly one medical record (functional).</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#MedicalRecord" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasSymptom">
+    <rdfs:label xml:lang="en">hasSymptom</rdfs:label>
+    <rdfs:comment xml:lang="en">Relates a patient to a symptom they present.</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Symptom" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hasVitalSign">
+    <rdfs:label xml:lang="en">hasVitalSign</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#VitalSign" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#indicatesDisease">
+    <rdfs:label xml:lang="en">indicatesDisease</rdfs:label>
+    <rdfs:comment xml:lang="en">A symptom clinically suggests a disease.</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Symptom" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#interactsWith">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty" />
+    <rdfs:label xml:lang="en">interactsWith</rdfs:label>
+    <rdfs:comment xml:lang="en">Two medications that should not be co-administered (symmetric).</rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#labTestFor">
+    <rdfs:label xml:lang="en">labTestFor</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#LabTest" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#memberOfDepartment">
+    <rdfs:label xml:lang="en">memberOfDepartment</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Department" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#partOfHospital">
+    <rdfs:label xml:lang="en">partOfHospital</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Department" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Hospital" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#performedBy">
+    <rdfs:label xml:lang="en">performedBy</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#prescribedMedication">
+    <rdfs:label xml:lang="en">prescribedMedication</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#prescribes">
+    <rdfs:label xml:lang="en">prescribes</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Doctor" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#recordIncludesDiagnosis">
+    <rdfs:label xml:lang="en">recordIncludesDiagnosis</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#MedicalRecord" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#referredBy">
+    <rdfs:label xml:lang="en">referredBy</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Doctor" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#specializesIn">
+    <rdfs:label xml:lang="en">specializesIn</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Specialist" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Disease" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#treatedBy">
+    <rdfs:label xml:lang="en">treatedBy</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#treats">
+        <rdfs:label xml:lang="en">treats</rdfs:label>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+        <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+      </owl:ObjectProperty>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#worksAt">
+    <rdfs:label xml:lang="en">worksAt</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+    <rdfs:range rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Institution" />
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#admissionDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">admissionDate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#bloodPressure">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">bloodPressure</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#VitalSign" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#bodyTemperature">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">bodyTemperature</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#VitalSign" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#dateOfBirth">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">dateOfBirth</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#diagnosisDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">diagnosisDate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#dischargeDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">dischargeDate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#dosage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">dosage</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#gender">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">gender</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#heartRate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">heartRate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#VitalSign" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#hospitalName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">hospitalName</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Hospital" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#licenseNumber">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">licenseNumber</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Practitioner" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#medicationName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">medicationName</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#patientName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">patientName</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#policyNumber">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">policyNumber</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#InsurancePlan" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#roomNumber">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">roomNumber</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Admission" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#severityLevel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">severityLevel</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#testDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">testDate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#LabTest" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#testResult">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">testResult</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#LabTest" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#treatmentCost">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">treatmentCost</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#treatmentEndDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">treatmentEndDate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#treatmentStartDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdfs:label xml:lang="en">treatmentStartDate</rdfs:label>
+    <rdfs:domain rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Treatment" />
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+  </owl:DatatypeProperty>
+  <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#CityHospital">
+    <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Hospital" />
+    <hco:hospitalName>Verona City Hospital</hco:hospitalName>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#EndocrinologyDept">
+    <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Department" />
+    <hco:partOfHospital rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#CityHospital" />
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Insulin">
+    <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Medication" />
+    <hco:medicationName>Insulin (rapid-acting)</hco:medicationName>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#JohnSmith">
+    <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Patient" />
+    <hco:patientName>John Smith</hco:patientName>
+    <hco:dateOfBirth rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1968-04-12</hco:dateOfBirth>
+    <hco:gender>male</hco:gender>
+    <hco:diagnosedWith>
+      <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis_JohnSmith_01">
+        <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis" />
+        <hco:diagnosisDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-02-15</hco:diagnosisDate>
+        <hco:severityLevel>moderate</hco:severityLevel>
+        <hco:diagnosisOf rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Type2Diabetes" />
+      </owl:NamedIndividual>
+    </hco:diagnosedWith>
+    <hco:undergoesTreatment>
+      <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#InsulinTherapy_JohnSmith">
+        <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Pharmacotherapy" />
+        <hco:treatmentStartDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-02-20</hco:treatmentStartDate>
+        <hco:performedBy rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#DrAliceReed" />
+      </owl:NamedIndividual>
+    </hco:undergoesTreatment>
+    <hco:treatedBy>
+      <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#DrAliceReed">
+        <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Specialist" />
+        <hco:licenseNumber>VR-MD-00981</hco:licenseNumber>
+        <hco:worksAt rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#CityHospital" />
+        <hco:memberOfDepartment rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#EndocrinologyDept" />
+        <hco:prescribes rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription_JohnSmith_01" />
+        <hco:specializesIn rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Type2Diabetes" />
+      </owl:NamedIndividual>
+    </hco:treatedBy>
+    <hco:hasMedicalRecord>
+      <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#MedicalRecord_JohnSmith">
+        <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#MedicalRecord" />
+        <hco:recordIncludesDiagnosis rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Diagnosis_JohnSmith_01" />
+      </owl:NamedIndividual>
+    </hco:hasMedicalRecord>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription_JohnSmith_01">
+    <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Prescription" />
+    <hco:dosage>10 units before breakfast</hco:dosage>
+    <hco:prescribedMedication rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Insulin" />
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#Type2Diabetes">
+    <rdf:type rdf:resource="http://www.semanticweb.org/kr/ontologies/2026/healthcare-clinical#ChronicDisease" />
+    <rdfs:label xml:lang="en">Type 2 Diabetes Mellitus</rdfs:label>
+  </owl:NamedIndividual>
+  </rdf:RDF>
